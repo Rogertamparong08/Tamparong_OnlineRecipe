@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>KarWinGisNin's Cook Tutorial Recipe</title>
+    <link rel = "stylesheet" href="designs.css">
+</head>
+<body>
+    <div class="container">
+        <h1>KarWinGisNin's Cook Tutorial Recipe</h1>
+        <input id="searchInput" type="text" placeholder="Enter Ingredients">
+        <button id="searchBtn" >Show Ingredients and Procedures</button>
+        <div  id="results" ></div>
+    </div>
+    <script>//javascript code is here
+    //get the search button element
+    var searchBtn = document.getElementById('searchBtn');
+
+    //attach a click event listener to the search button
+    searchBtn.addEventListener('click',searchRecipes);
+
+    //function to search for recipes
+    function searchRecipes(){
+        //get the search input value
+        var searchInput = document.getElementById('searchInput').value;
+
+        //clear the results div
+        var resultsDiv = document.getElementById('results');
+        resultsDiv.innerHTML = '';
+
+        //define recipe data
+        var recipes = [
+            {title: 'Adobo Manok',
+            descriptions: ["In the Philippines, a cooking technique called adobo is used. It is cooking protein in a liquid that is made up of Garlic, Vinegar, Soy sauce, and Peppercorns. This is a fusion of Chinese and Filipino cooking techniques."],
+            ingredients:[' adobo', ': ','pepper, ', 'chicken, ', 'garlic, ', 'oyster sauce, ', 'soy sauce, ', 'white vinegar, ', 'light brown sugar, '],
+            procedures: ['In a large pot, heat one tablespoon of oil first.',
+            'Add chicken thighs skin side down and sear on both sides. ',
+            'Once done searing the chicken, add the garlic, oyster sauce, and soy sauce. To coat the chicken, mix it in. Incorporate the peppercorns, brown sugar, vinegar, and bay leaves. ',
+            'Bring the liquid to a boil and lower it to a simmer. Simmer on low heat for 1 hour. ',
+            'To ensure that every side of the chicken has an equal amount of color, flip it every 20 minutes. On a bed of rice, serve the chicken.']},
+
+            {title: 'Kare-Kare',
+            descriptions: ['A thick, flavorful peanut sauce perfectly complements the traditional Filipino stew known as "kare kare."',
+            'Pork leg, tripe, and ox tail are the most often utilized meats in this recipe; occasionally, goat and chicken meat is also used.',
+            'To truly enjoy this dish, aside from the peanuts, you must have the shrimp paste (served on the side).'],
+            ingredients:[' kare-kare', ': ' , '3 lbs oxtail cut in 2 inch slices you an also use tripe or beef slices, ', '1 piece small banana flower bud sliced, ', '1 bundle pechay or bok choy, ',
+            '1 bundle string beans cut into 2 inch slices, ',
+            '4 pieces eggplants sliced, ',
+            '1 cup ground peanuts, ',
+            '1/2 cup peanut butter, ',
+            '1/2 cup shrimp paste, ',
+            '34 Ounces water about 1 Liter, ',
+            '1/2 cup annatto seeds soaked in a cup of water, ',
+            '1/2 cup toasted ground rice, ',
+            '1 tbsp garlic minced, ',
+            '1 piece onion chopped, ',
+            'salt and pepper'],
+             procedures:[
+            '1. Heat the water in a big pot until it boils. ',
+            '2. Add the onions and oxtail, and simmer for two to three hours, or until the meat is soft (35 minutes if you are using a pressure cooker). ',
+            '3. When the meat is soft, cook it for five to seven minutes while adding the ground peanuts, peanut butter, and coloring (water from the annatto seed mixture). ',
+            '4. For five minutes, add the toasted ground rice and boil. ',
+            '5. Sauté the garlic in a different skillet, then add the eggplant, string beans, and banana blossom. Cook for five minutes. ',
+            '6. Transfer the cooked vegetables to the large pot (where the rest of the ingredients are)',
+            '7. Add salt and pepper to taste',
+            '8. Serve hot with shrimp paste.']},
+
+
+            {title: 'Pritong Manok',
+            descriptions: ['Fried chicken(Pritong Manok) can be cooked in so many ways in all the different cultures around the world.'],
+            ingredients:[' pritong manok' , ': ', '2 lb. chicken drumsticks, ',
+           '1–2 teaspoon minced garlic, ',
+           '1–2 teaspoon minced onion, ',
+           '1 tablespoon oyster sauce, ',
+           '1 teaspoon black pepper, ',
+           '1 teaspoon salt, ',
+           '1 tablespoon seasoning mix (Magic Sarap), ',
+           '1 egg, ',
+           '1 tablespoon cornstarch, ',
+           '1–2 cups oil for frying'],
+            procedures: ['1. Place the raw chicken in a large bowl. Add the garlic, onion, oyster sauce, black pepper, salt, seasoning mix, egg, and cornstarch. Stir until the chicken is evenly coated. ', '2. Heat oil in a large pot over medium heat. When the oil is hot, place the chicken, one piece at a time, in the oil. The oil should cover the chicken pieces almost completely and it will bubble gently as the chicken cooks. Continue to fry the chicken until the skin is golden brown and crispy. The exact amount of time you’ll need depends on the temperature of the oil, but the aunties left their chicken in for about 15-20 minutes (a long time!) with the oil over lower heat. Remove from the oil and set on paper towels to drain excess oil. Repeat in small batches until all the chicken is fried.']},
+
+
+            {title: 'Champorado (Chocolate Porridge)',
+            descriptions: ['A chocolate rice pudding variation called Easy Champorado Recipe includes tablea, or pure chocolate. This will be really easy and quick for you to do.'],
+            ingredients: [' champorado', ': ', '1. 5 pieces tablea pure chocolate, ',
+            '1 3/4 cups glutinous rice or sushi rice, ',
+            '3/4 cup granulated white sugar, ',
+            '6 to 8 cups water, ',
+            'Condensed milk to taste'],
+            procedures: [ '1. Pour water in a cooking pot. Bring to a boil. ',
+            '2. Put-in the tablea and then stir. Let it dissolve in boiling water. ',
+            '3. Add-in the rice. Let the water re-boil. Set the heat to low-medium and then stir almost constantly to avoid sticking. The rice should be ready when it absorbs the water (about 15 to 25 minutes). ',
+            '4. Put the sugar in. After the sugar dissolves, stir. ',
+            '5. Spoon the champorado into separate serving dishes. Add condensed milk on top. ',
+            '6. Serve with tuyo.']},
+
+            {title: 'Lumpiang Shanghai',
+            descriptions: ['A dish of Filipino egg rolls is called lumpiang Shanghai. The major ingredients of the filling, also known as the meat mixture, are minced onion, carrots, and pork. Seasonings and spices are added to the blend. After that, each one is individually wrapped and rolled in thin flour sheets called lumpia wrappers.'],
+            ingredients: [' lumpia shanghai', ': ', '2 1/2 lbs. ground pork, ', ' 1 piece Knorr Pork Cube, ', ' 50 pieces lumpia wrapper, ', '3/4 cup carrot minced, ', '2 pieces onions minced, ', '2 pieces eggs, ', '¼ cup parsley minced, ' , '½ teaspoon ground black pepper, ', '1 teaspoon salt, ', '1 teaspoon Sesame oil, ', '1 teaspoon garlic powder, ', '2 cups cooking oil'],
+            procedures: ['1. Combine ground pork, carrot, onion, and parsley in a bowl. Mic well. 2. Add egg, ground black pepper, salt, garlic, powder, and Sesame oil. Continue to mix until the ingredients are well blended. ', '3. Crush the Knorr pork cube and add it into the mixture. Blend the ingredients altogether completely. 4. Put 1 to 1 1/2 tablespoons of meat mixture over a piece of lumpia wrapper. Wrap and roll to secure the mixture. Continue this step until the mixture is completely consumed. Note: watch the video below to see how. 5. Heat oil in a cooking pot in low to medium heat. Deep fry the lumpia until it turns golden brown. Remove from the pot and place in a plate lined with paper towel. 6. Transfer to a serving plate. Serve with sweet and sour sauce. ']},
+
+            {title: 'Sinigang',
+            descriptions: ['Filipinos are known for their sour soup, sinigang. Pork is the major component in this meal. You can also use fish and other proteins. Fish, shrimp, and beef are frequently utilized in sinigang cooking.'],
+            ingredients: [' sinigang', ': ', '1 lbs. pork belly, ', '0.5 lb. young tamarind, ', '0.5 bunch water spinach, ', '4 pieces string beans, ', '1 pieces eggplants, ', '0.5 piece daikon radish, ', '4 pieces okras, ', '1 pieces tomatoes, ', '1 pieces long green pepper, ', '0.5 piece onion, ', '1 quarts water, ', 'Fish sauce and ground black pepper'],
+            procedures: ['1. Boil the young tamarind in 2 quarts of water for 40 minutes. Filter the tamarind broth using a kitchen sieve or a strainer. Squeeze the tamarind afterwards to extract its remaining juices.', '2. Pour the tamarind broth into a cooking pot. Let it boil and then add the onion, pork belly, and half the amount of the tomatoes. ' , '3. Skim-off the floating scums, pour 1 tablespoon fish sauce, cover and continue to simmer for 1 hour. ', '4. Add daikon radish and eggplants. Cook for 5 minutes. ', '5. Add the long green pepper, string beans, remaining tomatoes, and okra. Cook for 3 minutes. ', '6. Add the cut stalks of water spinach and season with ground black pepper and fish sauce. Simmer for two minutes.', '7. Add the spinach leaves to the water. After covering, turn off the heat. Before serving, allow the leaves to simmer for three minutes over residual heat. ']},
+
+
+        ];
+        //filter matching recipes
+        var matchingRecipes = recipes.filter(function(recipe){
+            return recipe.ingredients.some(function(ingredient){
+                return ingredient.toLowerCase().includes(searchInput.toLowerCase());
+
+            });
+
+        });
+
+        //check for matching recipes and display
+        if(matchingRecipes.length > 0){
+            matchingRecipes.forEach(function(recipe){
+                var recipeDiv = document.createElement('div');
+                recipeDiv.className = 'recipe';
+
+                //display recipe title
+                var title = document.createElement('h3');
+                title.textContent = recipe.title;
+
+                var descriptions = document.createElement('p');
+                descriptions.textContent = 'Descriptions: ' + recipe.descriptions.join('');
+
+                //display recipe ingredients
+                var ingredients = document.createElement('p');
+                ingredients.textContent = 'Ingredients for' + recipe.ingredients.join('');
+
+                var procedures= document.createElement('p');
+                procedures.textContent = 'Procedures:  ' + recipe.procedures.join('');
+
+                recipeDiv.appendChild(title);
+                recipeDiv.appendChild(descriptions);
+                recipeDiv.appendChild(ingredients);
+                recipeDiv.appendChild(procedures);
+                resultsDiv.appendChild(recipeDiv);
+
+
+
+            });
+
+        }else
+        {
+            //display no recipe found message
+            var message = document.createElement('p');
+            message.textContent = 'No Recipe Found';
+            resultsDiv.appendChild(message);
+
+        }
+
+    }
+
+    </script>
+
+
+</body>
+</html>
